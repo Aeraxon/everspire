@@ -9,11 +9,10 @@ This is my personal cheat-sheet repository where I collect scripts, configuratio
 ## Structure
 
 - **[docker/](docker/)** - Docker installation and container management
-- **[linux/](linux/)** - Linux system setup and tools
+- **[linux/](linux/)** - Linux system setup and tools (including Python environments)
 - **[proxmox/](proxmox/)** - Proxmox VE, LXC containers, and VMs
 - **[truenas/](truenas/)** - TrueNAS Scale configuration and management
 - **[ai/](ai/)** - AI/ML tools and frameworks
-- **[conda/](conda/)** - Conda/Miniconda setup
 - **[networking/](networking/)** - Network, firewall, and VPN configuration
 - **[monitoring/](monitoring/)** - System monitoring tools
 - **[backup/](backup/)** - Backup scripts

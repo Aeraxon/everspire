@@ -4,15 +4,8 @@ Linux System-Setup, Tools und Konfigurationen.
 
 ## Anleitungen
 
-### python-venv-setup.md
-Installation und Aktivierung von Python Virtual Environments für verschiedene Python-Versionen (3.9, 3.10, 3.11, 3.12, etc.).
-
-Pattern:
-```bash
-sudo apt install python3.XX python3.XX-venv python3.XX-dev build-essential
-python3.XX -m venv venv
-source venv/bin/activate
-```
+### [python/](python/)
+Python environment management (venv, conda/miniconda) and setup guides.
 
 ### git-setup-guide.md
 Git-Konfiguration und Repository-Setup für GitHub und GitLab.
