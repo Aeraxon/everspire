@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Universal Docker Installation Script
-# Installiert Docker nach offizieller Methode mit optionalem GPU-Support und Portainer
-# Script sollte mit normalen User-Rechten ausgeführt werden (nicht als root)
+# Installs Docker using official method with optional GPU support and Portainer
+# Script should be run with normal user privileges (not as root)
 
-set -e  # Bei Fehler abbrechen
+set -e  # Exit on error
 
 echo "========================================"
 echo "Docker Installation Script"
@@ -12,21 +12,21 @@ echo "========================================"
 echo ""
 
 # ============================================================================
-# Abfragen am Anfang
+# Initial questions
 # ============================================================================
 
-read -p "GPU-Support installieren? (j/n): " GPU_CHOICE
-read -p "Portainer installieren? (0=Nein, 1=CE Standalone, 2=Agent): " PORTAINER_CHOICE
+read -p "Install GPU support? (y/n): " GPU_CHOICE
+read -p "Install Portainer? (0=No, 1=CE Standalone, 2=Agent): " PORTAINER_CHOICE
 
 echo ""
-echo "Zusammenfassung:"
-echo "  - GPU-Support: $GPU_CHOICE"
+echo "Summary:"
+echo "  - GPU Support: $GPU_CHOICE"
 echo "  - Portainer: $PORTAINER_CHOICE"
 echo ""
-read -p "Installation starten? (j/n): " CONFIRM
+read -p "Start installation? (y/n): " CONFIRM
 
-if [ "$CONFIRM" != "j" ] && [ "$CONFIRM" != "J" ]; then
-    echo "Installation abgebrochen."
+if [ "$CONFIRM" != "y" ] && [ "$CONFIRM" != "Y" ]; then
+    echo "Installation cancelled."
     exit 0
 fi
 
@@ -40,49 +40,49 @@ echo "[Phase 1] Docker Installation"
 echo "------------------------------"
 echo ""
 
-echo "→ Entferne alte Docker-Pakete..."
+echo "→ Removing old Docker packages..."
 for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do
     sudo apt-get remove -y $pkg 2>/dev/null || true
 done
 
-echo "→ System aktualisieren und Abhängigkeiten installieren..."
+echo "→ Updating system and installing dependencies..."
 sudo apt-get update
 sudo apt-get install -y ca-certificates curl
 
-echo "→ Docker GPG-Key hinzufügen..."
+echo "→ Adding Docker GPG key..."
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-echo "→ Docker Repository hinzufügen..."
+echo "→ Adding Docker repository..."
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
   $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-echo "→ APT-Index aktualisieren..."
+echo "→ Updating APT index..."
 sudo apt-get update
 
-echo "→ Docker-Pakete installieren..."
+echo "→ Installing Docker packages..."
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-echo "→ Benutzer '$USER' zur docker-Gruppe hinzufügen..."
+echo "→ Adding user '$USER' to docker group..."
 sudo usermod -aG docker $USER
 
 echo ""
-echo "✓ Docker Installation abgeschlossen!"
+echo "✓ Docker installation completed!"
 echo ""
 
 # ============================================================================
 # Phase 2: NVIDIA GPU-Support (optional)
 # ============================================================================
 
-if [ "$GPU_CHOICE" == "j" ] || [ "$GPU_CHOICE" == "J" ]; then
+if [ "$GPU_CHOICE" == "y" ] || [ "$GPU_CHOICE" == "Y" ]; then
     echo "[Phase 2] NVIDIA Container Toolkit Installation"
     echo "------------------------------------------------"
     echo ""
 
-    echo "→ NVIDIA Container Toolkit Repository hinzufügen..."
+    echo "→ Adding NVIDIA Container Toolkit repository..."
     sudo curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | \
       sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
 
@@ -90,22 +90,22 @@ if [ "$GPU_CHOICE" == "j" ] || [ "$GPU_CHOICE" == "J" ]; then
       sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
       sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
 
-    echo "→ NVIDIA Container Toolkit installieren..."
+    echo "→ Installing NVIDIA Container Toolkit..."
     sudo apt-get update
     sudo apt-get install -y nvidia-container-toolkit
 
-    echo "→ Docker Runtime für NVIDIA konfigurieren..."
+    echo "→ Configuring Docker runtime for NVIDIA..."
     sudo nvidia-ctk runtime configure --runtime=docker
 
     echo ""
-    echo "✓ NVIDIA Container Toolkit installiert!"
+    echo "✓ NVIDIA Container Toolkit installed!"
     echo ""
-    echo "HINWEIS: Falls dies ein unprivileged LXC Container ist, muss noch"
-    echo "         'no-cgroups' aktiviert werden mit:"
-    echo "         sudo nvidia-ctk config --set nvidia-container-cli.no-cgroups=true --in-place"
+    echo "NOTE: If this is an unprivileged LXC container, you need to enable"
+    echo "      'no-cgroups' with:"
+    echo "      sudo nvidia-ctk config --set nvidia-container-cli.no-cgroups=true --in-place"
     echo ""
 else
-    echo "[Phase 2] GPU-Support übersprungen"
+    echo "[Phase 2] GPU support skipped"
     echo ""
 fi
 
@@ -118,10 +118,10 @@ if [ "$PORTAINER_CHOICE" == "1" ]; then
     echo "------------------------------------"
     echo ""
 
-    echo "→ Erstelle Portainer-Verzeichnisstruktur..."
+    echo "→ Creating Portainer directory structure..."
     mkdir -p $HOME/docker/portainer/volumes/portainer/data
 
-    echo "→ Erstelle docker-compose.yml..."
+    echo "→ Creating docker-compose.yml..."
     cat <<'EOF' > $HOME/docker/portainer/docker-compose.yml
 services:
   portainer:
@@ -136,12 +136,12 @@ services:
     restart: always
 EOF
 
-    echo "→ Starte Portainer..."
+    echo "→ Starting Portainer..."
     cd $HOME/docker/portainer
     docker compose up -d
 
     echo ""
-    echo "✓ Portainer CE installiert und gestartet!"
+    echo "✓ Portainer CE installed and started!"
     echo "  - WebUI (HTTPS): https://$(hostname -I | awk '{print $1}'):9443"
     echo "  - Edge Port:     Port 8000"
     echo ""
@@ -151,7 +151,7 @@ elif [ "$PORTAINER_CHOICE" == "2" ]; then
     echo "---------------------------------------"
     echo ""
 
-    echo "→ Starte Portainer-Agent..."
+    echo "→ Starting Portainer Agent..."
     docker run -d \
       -p 9001:9001 \
       --name portainer_agent \
@@ -162,27 +162,27 @@ elif [ "$PORTAINER_CHOICE" == "2" ]; then
       portainer/agent:latest
 
     echo ""
-    echo "✓ Portainer-Agent installiert und gestartet!"
+    echo "✓ Portainer Agent installed and started!"
     echo "  - Agent Port: 9001"
-    echo "  - Verbinde von deinem Portainer-Server aus mit: $(hostname -I | awk '{print $1}'):9001"
+    echo "  - Connect from your Portainer server to: $(hostname -I | awk '{print $1}'):9001"
     echo ""
 else
-    echo "[Phase 3] Portainer-Installation übersprungen"
+    echo "[Phase 3] Portainer installation skipped"
     echo ""
 fi
 
 # ============================================================================
-# Abschluss
+# Completion
 # ============================================================================
 
 echo "========================================"
-echo "Installation erfolgreich abgeschlossen!"
+echo "Installation completed successfully!"
 echo "========================================"
 echo ""
-echo "Installierte Komponenten:"
+echo "Installed components:"
 echo "  - Docker: $(docker --version)"
 
-if [ "$GPU_CHOICE" == "j" ] || [ "$GPU_CHOICE" == "J" ]; then
+if [ "$GPU_CHOICE" == "y" ] || [ "$GPU_CHOICE" == "Y" ]; then
     echo "  - NVIDIA Container Toolkit: $(nvidia-ctk --version | head -n1)"
 fi
 
@@ -193,22 +193,22 @@ elif [ "$PORTAINER_CHOICE" == "2" ]; then
 fi
 
 echo ""
-echo "WICHTIG:"
-echo "  - Die Docker-Gruppe wird erst nach einem Reboot oder Re-Login aktiv"
-echo "  - Du kannst dich neu einloggen mit: newgrp docker"
-echo "  - Oder das System neu starten"
+echo "IMPORTANT:"
+echo "  - Docker group will be active only after reboot or re-login"
+echo "  - You can re-login with: newgrp docker"
+echo "  - Or restart the system"
 echo ""
 
-if [ "$GPU_CHOICE" == "j" ] || [ "$GPU_CHOICE" == "J" ]; then
-    echo "GPU-Test nach dem Reboot:"
+if [ "$GPU_CHOICE" == "y" ] || [ "$GPU_CHOICE" == "Y" ]; then
+    echo "GPU test after reboot:"
     echo "  docker run --rm --gpus all nvidia/cuda:12.6.0-base-ubuntu22.04 nvidia-smi"
     echo ""
 fi
 
-read -p "System jetzt neu starten? (j/n): " REBOOT_CHOICE
-if [ "$REBOOT_CHOICE" == "j" ] || [ "$REBOOT_CHOICE" == "J" ]; then
-    echo "System wird neu gestartet..."
+read -p "Restart system now? (y/n): " REBOOT_CHOICE
+if [ "$REBOOT_CHOICE" == "y" ] || [ "$REBOOT_CHOICE" == "Y" ]; then
+    echo "System is restarting..."
     sudo reboot
 else
-    echo "Bitte später manuell neu starten oder 'newgrp docker' ausführen."
+    echo "Please restart manually later or run 'newgrp docker'."
 fi
