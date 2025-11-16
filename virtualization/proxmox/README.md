@@ -33,6 +33,20 @@ Schritte:
 5. Datastore konfigurieren
 6. Integration in TrueNAS Snapshots/Replikation
 
+### docker-lxc-apparmor-fix.md
+Fix AppArmor conflicts when running Docker in unprivileged Proxmox LXC containers.
+
+**Problem:** Docker fails with "permission denied: open sysctl net.ipv4.ip_unprivileged_port_start file"
+
+**Quick fix:**
+```bash
+# Add to /etc/pve/lxc/100.conf:
+lxc.apparmor.profile: unconfined
+lxc.mount.entry: /dev/null sys/module/apparmor/parameters/enabled none bind 0 0
+```
+
+Required for containerd.io 1.7.28+ in nested containers. Container remains unprivileged.
+
 ---
 
 ## GPU & AI Workloads
