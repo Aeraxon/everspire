@@ -387,7 +387,7 @@ systemctl restart docker
 docker run --rm --gpus all nvidia/cuda:12.4.0-base-ubuntu22.04 nvidia-smi
 ```
 
-Siehe: `../../docker/installation/docker-install.sh` mit GPU-Option.
+Siehe: `docker/installation/docker-install.sh` mit GPU-Option.
 
 ## Best Practices
 
@@ -403,7 +403,7 @@ Siehe: `../../docker/installation/docker-install.sh` mit GPU-Option.
 - **GPU Passthrough:** `pcie-passthrough-setup.md` (für VMs)
 - **GPU Init Service:** `nvidia-gpu-lxc-init.md` (Container sehen GPU nach Reboot)
 - **GPU Treiber Blacklist:** `gpu-driver-blacklist.md` (falls GPU an VM)
-- **Docker GPU:** `../../docker/installation/docker-install.sh` (GPU in Docker)
+- **Docker GPU:** `docker/installation/docker-install.sh` (GPU in Docker)
 
 ---
 

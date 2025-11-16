@@ -4,7 +4,7 @@ GPU-accelerated AI infrastructure on Proxmox VE.
 
 ## Complete Setup Guide
 
-*(Coming soon)* End-to-end guide for deploying GPU-accelerated AI workloads on Proxmox, similar to the [Incus guide](../incus/).
+*(Coming soon)* End-to-end guide for deploying GPU-accelerated AI workloads on Proxmox, similar to the [Incus guide](ai/incus/).
 
 **Will include:**
 - LXC containers with GPU support for AI workloads
@@ -78,4 +78,4 @@ systemctl enable nvidia-init.service
 
 ## Related Documentation
 
-For general Proxmox guides (monitoring, backup, etc.), see [../../virtualization/proxmox/](../../virtualization/proxmox/).
+For general Proxmox guides (monitoring, backup, etc.), see [virtualization/proxmox/](virtualization/proxmox/).

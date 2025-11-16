@@ -11,4 +11,4 @@ Proxmox VE setup, monitoring, and management.
 - CPU monitoring (C-States, temperature)
 - Proxmox Backup Server on TrueNAS Scale
 
-**For GPU/AI-related Proxmox guides**, see [../ai/proxmox/](../ai/proxmox/).
+**For GPU/AI-related Proxmox guides**, see [ai/proxmox/](ai/proxmox/).

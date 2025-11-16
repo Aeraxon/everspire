@@ -37,7 +37,7 @@ Schritte:
 
 ## GPU & AI Workloads
 
-GPU-bezogene Proxmox Guides wurden nach **[../ai/proxmox/](../ai/proxmox/)** verschoben:
+GPU-bezogene Proxmox Guides wurden nach **[ai/proxmox/](ai/proxmox/)** verschoben:
 - GPU-Passthrough für VMs
 - NVIDIA GPU in LXC Containern
 - Kernel-Pinning für GPU-Stabilität
