@@ -3,6 +3,7 @@ services:
     image: ollama/ollama:latest
     container_name: ollama-gemma3-12b
     restart: unless-stopped
+    runtime: nvidia  # Use runtime for LXC container compatibility
     network_mode: host
     volumes:
       - ollama-data:/root/.ollama
@@ -11,13 +12,6 @@ services:
       - CUDA_VISIBLE_DEVICES=1
       - NVIDIA_VISIBLE_DEVICES=1
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              device_ids: ['1']
-              capabilities: [gpu]
     shm_size: '2gb'
     ipc: host
 
