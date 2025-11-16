@@ -2,6 +2,14 @@
 
 AI tools, model deployment, and ML frameworks.
 
+## Platform Deployment Guides
+
+### [incus/](incus/)
+Complete setup guide for GPU-accelerated AI infrastructure on Incus.
+
+### [proxmox/](proxmox/)
+GPU-accelerated AI infrastructure on Proxmox VE *(guide coming soon)*.
+
 ## Docker Deployments
 
 ### [docker/vllm/](docker/vllm/)
