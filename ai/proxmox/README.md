@@ -78,4 +78,4 @@ systemctl enable nvidia-init.service
 
 ## Related Documentation
 
-For general Proxmox guides (monitoring, backup, etc.), see [../../proxmox/](../../proxmox/).
+For general Proxmox guides (monitoring, backup, etc.), see [../../virtualization/proxmox/](../../virtualization/proxmox/).
