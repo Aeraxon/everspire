@@ -18,9 +18,18 @@ echo ""
 read -p "Install GPU support? (y/n): " GPU_CHOICE
 read -p "Install Portainer? (0=No, 1=CE Standalone, 2=Agent): " PORTAINER_CHOICE
 
+if [ "$GPU_CHOICE" == "y" ] || [ "$GPU_CHOICE" == "Y" ]; then
+    read -p "Running in unprivileged LXC container? (y/n): " LXC_CHOICE
+else
+    LXC_CHOICE="n"
+fi
+
 echo ""
 echo "Summary:"
 echo "  - GPU Support: $GPU_CHOICE"
+if [ "$GPU_CHOICE" == "y" ] || [ "$GPU_CHOICE" == "Y" ]; then
+    echo "  - LXC Container: $LXC_CHOICE"
+fi
 echo "  - Portainer: $PORTAINER_CHOICE"
 echo ""
 read -p "Start installation? (y/n): " CONFIRM
@@ -97,12 +106,15 @@ if [ "$GPU_CHOICE" == "y" ] || [ "$GPU_CHOICE" == "Y" ]; then
     echo "→ Configuring Docker runtime for NVIDIA..."
     sudo nvidia-ctk runtime configure --runtime=docker
 
+    if [ "$LXC_CHOICE" == "y" ] || [ "$LXC_CHOICE" == "Y" ]; then
+        echo "→ Configuring for unprivileged LXC container..."
+        sudo nvidia-ctk config --set nvidia-container-cli.no-cgroups=true --in-place
+        sudo systemctl restart docker
+        echo "✓ LXC container configuration applied!"
+    fi
+
     echo ""
     echo "✓ NVIDIA Container Toolkit installed!"
-    echo ""
-    echo "NOTE: If this is an unprivileged LXC container, you need to enable"
-    echo "      'no-cgroups' with:"
-    echo "      sudo nvidia-ctk config --set nvidia-container-cli.no-cgroups=true --in-place"
     echo ""
 else
     echo "[Phase 2] GPU support skipped"
