@@ -181,7 +181,7 @@ pct enter <container-id>
 nvidia-smi
 ```
 
-Siehe: `install-docker.sh` mit GPU-Support Option für NVIDIA Container Toolkit Installation.
+Siehe: `docker/installation/docker-install.sh` mit GPU-Support Option für NVIDIA Container Toolkit Installation.
 
 ### Container startet vor Service
 
@@ -258,7 +258,7 @@ chmod +x /etc/rc.local
 
 - **GPU Passthrough:** `pcie-passthrough-setup.md`
 - **GPU Treiber Blacklisting:** `gpu-driver-blacklist.md`
-- **Docker GPU Support:** `docker/installation/install-docker.sh` mit GPU-Option
+- **Docker GPU Support:** `docker/installation/docker-install.sh` mit GPU-Option
 
 ## Erweiterte Konfiguration
 

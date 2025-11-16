@@ -17,8 +17,16 @@ Inhalt:
 - Access Tokens erstellen
 - SSH-Setup (optional)
 
-### cuda-bashrc-setup.md
-CUDA Toolkit PATH und LD_LIBRARY_PATH Konfiguration für verschiedene CUDA-Versionen.
+### cuda-bashrc-setup.sh
+Automated CUDA Toolkit bashrc configuration helper.
+
+Interaktive Auswahl der CUDA-Version (11.8-12.8), erstellt Backup und fügt CUDA Pfade automatisch zur `~/.bashrc` hinzu. Optional: Symlink `/usr/local/cuda` erstellen.
+
+```bash
+./cuda-bashrc-setup.sh
+```
+
+Siehe auch: **cuda-bashrc-setup.md** für manuelle Konfiguration.
 
 Pattern:
 ```bash
