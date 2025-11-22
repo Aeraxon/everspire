@@ -150,12 +150,13 @@ EOF
 
     echo "→ Starting Portainer..."
     cd $HOME/docker/portainer
-    docker compose up -d
+    sudo docker compose up -d
 
     echo ""
     echo "✓ Portainer CE installed and started!"
-    echo "  - WebUI (HTTPS): https://$(hostname -I | awk '{print $1}'):9443"
-    echo "  - Edge Port:     Port 8000"
+    echo "  - WebUI via IP:       https://$(hostname -I | awk '{print $1}'):9443"
+    echo "  - WebUI via hostname: https://$(hostname):9443"
+    echo "  - Edge Port:          Port 8000"
     echo ""
 
 elif [ "$PORTAINER_CHOICE" == "2" ]; then
@@ -164,7 +165,7 @@ elif [ "$PORTAINER_CHOICE" == "2" ]; then
     echo ""
 
     echo "→ Starting Portainer Agent..."
-    docker run -d \
+    sudo docker run -d \
       -p 9001:9001 \
       --name portainer_agent \
       --restart=always \
@@ -176,7 +177,8 @@ elif [ "$PORTAINER_CHOICE" == "2" ]; then
     echo ""
     echo "✓ Portainer Agent installed and started!"
     echo "  - Agent Port: 9001"
-    echo "  - Connect from your Portainer server to: $(hostname -I | awk '{print $1}'):9001"
+    echo "  - Connect via IP:       $(hostname -I | awk '{print $1}'):9001"
+    echo "  - Connect via hostname: $(hostname):9001"
     echo ""
 else
     echo "[Phase 3] Portainer installation skipped"
@@ -192,7 +194,7 @@ echo "Installation completed successfully!"
 echo "========================================"
 echo ""
 echo "Installed components:"
-echo "  - Docker: $(docker --version)"
+echo "  - Docker: $(sudo docker --version)"
 
 if [ "$GPU_CHOICE" == "y" ] || [ "$GPU_CHOICE" == "Y" ]; then
     echo "  - NVIDIA Container Toolkit: $(nvidia-ctk --version | head -n1)"
