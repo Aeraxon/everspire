@@ -26,6 +26,10 @@ The current configuration has diagnostics and personalization disabled:
 
 However, this may not prevent all data transmission. If privacy is a concern, consider monitoring network traffic or using firewall rules to block outbound connections.
 
+## Version Note
+
+This setup uses n8n version **1.118.2** instead of the latest version due to a known bug in version 1.120.4 that causes the frontend to crash with the error: "Cannot read properties of undefined (reading 'ldap')". Version 1.118.2 is stable and tested.
+
 ## Quick Start
 
 1. **Create required directories**:
