@@ -34,3 +34,7 @@ EOF
 echo "✓ .env file created with secure random secrets!"
 echo ""
 echo "IMPORTANT: Keep this file secure and never commit it to git."
+echo "You can now run: docker compose up -d"
+echo ""
+echo "Cleaning up setup script..."
+rm -- "$0"

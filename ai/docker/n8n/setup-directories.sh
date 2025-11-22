@@ -11,4 +11,7 @@ mkdir -p consume
 mkdir -p output
 
 echo "Done! Directories created with your user permissions."
-echo "You can now run: docker compose up -d"
+echo "You can now run: ./generate-env.sh"
+echo ""
+echo "Cleaning up setup script..."
+rm -- "$0"
