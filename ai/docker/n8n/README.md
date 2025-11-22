@@ -10,7 +10,8 @@ Download the required files:
 wget https://raw.githubusercontent.com/Aeraxon/everspire/main/ai/docker/n8n/docker-compose.yml
 wget https://raw.githubusercontent.com/Aeraxon/everspire/main/ai/docker/n8n/.env.example
 wget https://raw.githubusercontent.com/Aeraxon/everspire/main/ai/docker/n8n/setup-directories.sh
-chmod +x setup-directories.sh
+wget https://raw.githubusercontent.com/Aeraxon/everspire/main/ai/docker/n8n/generate-env.sh
+chmod +x setup-directories.sh generate-env.sh
 ```
 
 ## Privacy Warning
@@ -37,22 +38,14 @@ However, this may not prevent all data transmission. If privacy is a concern, co
    - Replace `my-host-name` with your actual hostname or domain
    - Adjust `GENERIC_TIMEZONE` if needed (default: UTC)
 
-3. **Copy and configure environment file**:
+3. **Generate .env file with random secrets**:
    ```bash
-   cp .env.example .env
+   ./generate-env.sh
    ```
 
-4. **Generate secure secrets**:
-   ```bash
-   openssl rand -base64 32  # Use for N8N_ENCRYPTION_KEY
-   openssl rand -base64 32  # Use for N8N_USER_MANAGEMENT_JWT_SECRET
-   openssl rand -base64 32  # Use for QDRANT_API_KEY
-   # Set a strong POSTGRES_PASSWORD
-   ```
-
-5. **Start the stack**:
+4. **Start the stack**:
    ```bash
    docker compose up -d
    ```
 
-6. **Access n8n**: `http://localhost:5678`
+5. **Access n8n**: `http://localhost:5678`
