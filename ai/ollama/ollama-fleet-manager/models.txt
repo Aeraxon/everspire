@@ -1,0 +1,6 @@
+# Ollama Modelle
+# Ein Modellname pro Zeile
+# Zeilen die mit # beginnen werden ignoriert
+
+gpt-oss:20b
+bge-m3:latest
